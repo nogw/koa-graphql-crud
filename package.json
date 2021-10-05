@@ -1,0 +1,27 @@
+{
+  "name": "koa-api",
+  "version": "1.0.0",
+  "main": "server.ts",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsnd --respawn --transpile-only --ignore-watch node_modules --no-notify src/server.ts",
+    "start": "node public/dist/server.js"
+  },
+  "dependencies": {
+    "graphql": "^15.6.0",
+    "koa": "^2.13.3",
+    "koa-graphql": "^0.9.0",
+    "koa-mount": "^4.0.0",
+    "mongoose": "^6.0.9",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.5.0",
+    "@types/koa": "^2.13.4",
+    "@types/mongoose": "^5.11.97",
+    "@types/koa-graphql": "^0.8.5",
+    "@types/koa-mount": "^4.0.1",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.4.3"
+  }
+}
