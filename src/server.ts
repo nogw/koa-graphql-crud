@@ -1,19 +1,15 @@
+require('dotenv').config()
 import Koa from 'koa'
-import mount from 'koa-mount'
-import graphqlHTTP from 'koa-graphql'
+import * as Router from 'koa-router'
+import * as graphqlHttp from 'koa-graphql';
+import graphqlSchema from './graphql/schema'
 import db from './database/db'
 
-const app = new Koa
+const app = new Koa();
+const router = new Router();
+const graphqlServer = graphqlHttp({schema: graphqlSchema, graphiql: true})
 
 db.connect()
-
-app.use(mount("/graphql", graphqlHTTP
-  ({
-    schema,
-    graphiql: true
-  }))
-)
-
-app.listen(3000, () => {
-  console.log(`run in ${3000}`)
-})
+router.all('/graphql', graphqlServer)
+app.use(router.routes()).use(router.allowedMethods())
+app.listen(4000);

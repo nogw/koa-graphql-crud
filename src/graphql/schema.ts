@@ -1,21 +1,15 @@
 import { buildSchema } from 'graphql'
-import {GraphQLSchema, GraphQLObjectType, GraphQLString} from 'graphql'
+import { GraphQLSchema, GraphQLObjectType, GraphQLString } from 'graphql'
 import userType from './userType'
 import userModel from '../models/user.model'
 
-const schema = buildSchema(`
-  type Query {
-    hello: String
-  }
-`);
-
 const rootQuery = new GraphQLObjectType({
-  name: "User",
+  name: "UserQueryType",
   fields: {
     user: {
       type: userType.userType,
       args: { id: { type: GraphQLString } },
-      resolve(parent, args) {
+      resolve(_, args) {
         return userModel.findById(args.id)
       },
     },
