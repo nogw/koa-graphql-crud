@@ -1,6 +1,7 @@
 import * as Mongoose from 'mongoose'
 
 export interface userModelType extends Mongoose.Document {
+  _id: string,
   name: string,
   email: string,
   password: string,

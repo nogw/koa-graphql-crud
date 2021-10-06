@@ -12,6 +12,10 @@ export default mutationWithClientMutationId({
     email: { type: new GraphQLNonNull(GraphQLString) },
     password: { type: new GraphQLNonNull(GraphQLString) },
   },
+  outputFields: {
+    token: { type: GraphQLString, resolve: ({ token }) => token },
+    error: { type: GraphQLString, resolve: ({ error }) => error }
+  },
   mutateAndGetPayload: async ({ name, email, password }) => {
     const userExists = await User.findOne({ email })
 
@@ -40,16 +44,6 @@ export default mutationWithClientMutationId({
     return {
       token: token,
       error: null
-    }
-  },
-  outputFields: {
-    token: {
-      type: GraphQLString,
-      resolve: ({ token }) => token
-    },
-    error: {
-      type: GraphQLString,
-      resolve: ({ error }) => error
     }
   }
 })
