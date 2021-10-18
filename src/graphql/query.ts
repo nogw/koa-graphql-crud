@@ -3,7 +3,8 @@ import userType from './user/userType'
 import userModel from '../models/userModel'
 
 const queryType = new GraphQLObjectType({
-  name: "Query",
+  name: "UserQuery",
+  description: "root of all queries",
   fields: {
     UserQuery: {
       type: userType.userType,

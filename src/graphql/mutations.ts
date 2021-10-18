@@ -2,7 +2,7 @@ import { GraphQLObjectType } from 'graphql'
 import mutationUser from './user'
 
 const mutationType = new GraphQLObjectType({
-  name: "Mutation",
+  name: "UserMutation",
   description: "root of all mutations",
   fields: () => ({
     ...mutationUser

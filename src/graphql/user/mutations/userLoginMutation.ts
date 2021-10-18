@@ -2,6 +2,7 @@ import { GraphQLNonNull, GraphQLString } from 'graphql'
 import { mutationWithClientMutationId } from 'graphql-relay'
 import { compare } from 'bcryptjs'
 import User, { userModelType } from '../../../models/userModel'
+import { sign } from 'jsonwebtoken'
 
 export default mutationWithClientMutationId({
   name: "UserLogin",
@@ -15,16 +16,16 @@ export default mutationWithClientMutationId({
     error: { type: GraphQLString, resolve: ({ error }) => error}
   },
   mutateAndGetPayload: async ({ email, password }) => {
-    const userExists = await User.findOne({ email })
+    const user = await User.findOne({ email })
 
-    if (!userExists) {
+    if (!user) {
       return {
         token: null,
         error: "User not found"
       }
     }
 
-    const result = await compare(password, userExists.password)
+    const result = await compare(password, user.password)
 
     if (!result) {
       return {
@@ -33,8 +34,13 @@ export default mutationWithClientMutationId({
       }
     }
 
+    const token = sign({}, process.env.JWT_TOKEN, {
+      subject: user._id.toString(),
+      expiresIn: "1 day"
+    })
+
     return {
-      token: result,
+      token: token,
       error: null
     }
   }
